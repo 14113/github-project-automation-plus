@@ -109,7 +109,7 @@ const getData = () => {
 			} else {
 				await Promise.all(
 					columns.map(column => octokit.graphql(`mutation {
-						moveProjectCard( input: { cardId: "${cardId}", columnId: "${column.id}", afterCardId: "100000"
+						moveProjectCard( input: { cardId: "${cardId}", columnId: "${column.id}"
 					}) { clientMutationId } }`))
 				);
 			}
