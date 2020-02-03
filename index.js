@@ -115,13 +115,12 @@ const getData = () => {
 			}
 		// If the card does not exist, add it to the column
 		} else {
-			const {cardEdge, projectColumn} = await Promise.all(
+			const cards = await Promise.all(
 				columns.map(column => octokit.graphql(`mutation {
 					addProjectCard( input: { contentId: "${nodeId}", projectColumnId: "${column.id}"
 				}) { clientMutationId } }`))
 			);
-			console.log(cardEdge);
-			console.log(projectColumn);
+			console.log(cards);
 		}
 
 		console.log(`✅ ${action} card to ${column} in ${project}`);
