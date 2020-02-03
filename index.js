@@ -109,17 +109,19 @@ const getData = () => {
 			} else {
 				await Promise.all(
 					columns.map(column => octokit.graphql(`mutation {
-						moveProjectCard( input: { cardId: "${cardId}", columnId: "${column.id}"
+						moveProjectCard( input: { cardId: "${cardId}", columnId: "${column.id}", afterCardId: "100000"
 					}) { clientMutationId } }`))
 				);
 			}
 		// If the card does not exist, add it to the column
 		} else {
-			await Promise.all(
+			const {cardEdge, projectColumn} = await Promise.all(
 				columns.map(column => octokit.graphql(`mutation {
 					addProjectCard( input: { contentId: "${nodeId}", projectColumnId: "${column.id}"
 				}) { clientMutationId } }`))
 			);
+			console.log(cardEdge);
+			console.log(projectColumn);
 		}
 
 		console.log(`✅ ${action} card to ${column} in ${project}`);
